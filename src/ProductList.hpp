@@ -1,7 +1,7 @@
 #pragma once
 
-#include <algorithm>
 #include <string>
+#include <set>
 #include <vector>
 
 #include "Product.hpp"
@@ -13,7 +13,7 @@ class ProductList
 {
 public:
 
-    ProductList() = default;
+    ProductList();
     ~ProductList() = default;
 
     /**
@@ -31,7 +31,10 @@ public:
      */
     std::vector<QueryResult> query(const std::string &str);
 
+
+
 private:
     InvertedIndex invertedIndex;
     std::vector<Product> productList;
+    std::set<std::string> stopWords;
 };

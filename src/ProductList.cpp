@@ -1,9 +1,31 @@
+#include <set>
+#include <fstream>
+
 #include "InvertedIndex.hpp"
 #include "ProductList.hpp"
 #include "QueryResult.hpp"
 #include "Similarity.hpp"
 #include "Utils.hpp"
-#include <set>
+
+ProductList::ProductList()
+{
+    auto stopWordsFile = std::ifstream("data/stopwords.txt");
+    if (!stopWordsFile.fail())
+    {
+        std::string entry;
+        try
+        {
+            while (std::getline(stopWordsFile, entry))
+            {
+                this->stopWords.insert(entry);
+            }
+        }
+        catch (...)
+        {
+            // keep running if any error occurs while loading stop words
+        }
+    }
+}
 
 void ProductList::add(Product &prod)
 {
@@ -13,7 +35,8 @@ void ProductList::add(Product &prod)
 
     for (auto token : tokens)
     {
-        this->invertedIndex.add(token, prod.idx);
+        if (this->stopWords.find(token) == this->stopWords.end())
+            this->invertedIndex.add(token, prod.idx);
     }
 };
 
@@ -25,6 +48,9 @@ std::vector<QueryResult> ProductList::query(const std::string &str)
     // search for the products that have the same tokens as the query.
     for (auto token : tokens)
     {
+        if (this->stopWords.find(token) != this->stopWords.end())
+            continue;
+
         auto idx = this->invertedIndex.get(token);
 
         if (!idx)
