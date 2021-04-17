@@ -4,10 +4,13 @@
 #include <unordered_set>
 #include <boost/algorithm/string.hpp>
 
-/*
- * Similarity based in Sørensen–Dice index.
+
+/**
+ * @brief Similarity based in Sørensen–Dice index.
  *
- * Returns the Similarity between _str1 and _str2.
+ * @param _str1 First string.
+ * @param _str2 Second string.
+ * @return double Similarity score between _str1 and _str2.
  */
 double sorensenDice(const std::string& _str1, const std::string& _str2) {
     // Base case: if some string is empty.

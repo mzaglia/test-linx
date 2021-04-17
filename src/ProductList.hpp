@@ -16,11 +16,20 @@ public:
     ProductList() = default;
     ~ProductList() = default;
 
+    /**
+     * @brief Add a product to the list
+     *
+     * @param prod Product to be added.
+     */
     void add(Product &prod);
-    std::vector<QueryResult>  query(const std::string &str);
 
-private:
-    std::vector<std::string> checkSpelling(const std::vector<std::string>& vec);
+    /**
+     * @brief Search for products best matched with the given query by using Sorensen-Dice score.
+     *
+     * @param str Query to be searched.
+     * @return std::vector<QueryResult> Vector of highest scoring products ordered by Id.
+     */
+    std::vector<QueryResult> query(const std::string &str);
 
 private:
     InvertedIndex invertedIndex;

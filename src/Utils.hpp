@@ -6,6 +6,13 @@
 #include <string>
 #include <vector>
 
+/**
+ * @brief Tokenize a string by removing all punctuation, transforming to lower case
+ *  and splitting by spaces.
+ *
+ * @param str String to be tokenized
+ * @return std::vector<std::string> Vector of tokenized strings.
+ */
 std::vector<std::string> static tokenize(const std::string &str)
 {
     std::vector<std::string> tokens;
@@ -19,6 +26,13 @@ std::vector<std::string> static tokenize(const std::string &str)
     return tokens;
 };
 
+/**
+ * @brief Count the number of common tokens beetween two strings.
+ *
+ * @param tokens1 First string.
+ * @param tokens2 Second string.
+ * @return int Number of common tokens.
+ */
 int numCommonTokens(std::vector<std::string> &tokens1, std::vector<std::string> &tokens2)
 {
     std::sort(tokens1.begin(), tokens1.end());
