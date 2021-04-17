@@ -10,6 +10,7 @@ void ProductList::add(Product &prod)
     prod.idx = this->productList.size();
     this->productList.push_back(prod);
     auto tokens = tokenize(prod.name);
+
     for (auto token : tokens)
     {
         this->invertedIndex.add(token, prod.idx);
@@ -21,6 +22,7 @@ std::vector<QueryResult> ProductList::query(const std::string &str)
     std::set<const Product *> result;
     auto tokens = tokenize(str);
 
+    // search for the products that have the same tokens as the query.
     for (auto token : tokens)
     {
         auto idx = this->invertedIndex.get(token);
@@ -38,12 +40,25 @@ std::vector<QueryResult> ProductList::query(const std::string &str)
     for (auto p : result)
     {
         auto prodTokens = tokenize(p->name);
+
+        // perform sorensenDice to compare query and product name.
+        // add weight to score accordingly to the number of common tokens beetween query and product name.
         auto score = sorensenDice(str, p->name) * numCommonTokens(tokens, prodTokens);
 
         results.push_back(QueryResult(p, score));
     }
-    std::sort(results.begin(), results.end(), std::greater<>());
-    results.resize(results.size() > 20 ? 20 : results.size());
+    // sort by the best score
+    std::sort(results.begin(), results.end(), [](const QueryResult &a, const QueryResult &b) {
+        return a.score > b.score;
+    });
 
+    // resize results if there are more then 20
+    if (result.size() > 20)
+        results.resize(20);
+
+    //sort again by id
+    std::sort(results.begin(), results.end(), [](const QueryResult &a, const QueryResult &b) {
+        return a.prod->id < b.prod->id;
+    });
     return results;
 }

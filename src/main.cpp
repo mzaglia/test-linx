@@ -18,20 +18,21 @@ using json = nlohmann::json;
 
 int main()
 {
-
-    std::cout << "Loading data..." << std::endl;
     ProductList prodList;
-    auto start = std::chrono::system_clock::now();
+
     try
     {
+        // open data file.
+        std::ifstream file("data/catalogo_produtos.json");
 
-        std::ifstream file("../data/catalogo_produtos.json");
-
+        // if the file fails to open show error message and exits.
         if (file.fail())
         {
-            std::cerr << "Error opening file" << std::endl;
+            std::cerr << "Erro ao abrir 'data/catalogo_produtos.json'" << std::endl;
             return 1;
         }
+
+        // iterate through the data file and parse the date to a Product.
         std::string line;
         while (std::getline(file, line))
         {
@@ -41,35 +42,53 @@ int main()
         }
         file.close();
     }
-    catch (...)
+    catch(json::parse_error &e)
     {
-        std::cerr << "Error loading data..." << std::endl;
+        // if an error while parsing the json document occurs show error message and exits.
+        std::cerr << "Erro ao realizar o parse do arquivo JSON." << std::endl;
         return 1;
     }
-    auto end = std::chrono::system_clock::now();
-    auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count();
-    std::cout << "Finished data loading in: " << duration << "ms" << std::endl;
+    catch (...)
+    {
+        // if any exception occurs show error message and exits.
+        std::cerr << "Erro ao carregar o arquivo!" << std::endl;
+        return 1;
+    }
 
-    // do query
-    const char* input;
-    while ((input = readline("> Digite aqui sua consulta: ")) != nullptr) {
-        if (*input) add_history(input);
+    // start queries
+    std::cout << "Bem vindo ao processador de consultas! (Para sair digite /sair)" << std::endl;
+
+    const char *input;
+    while ((input = readline("> Digite aqui sua consulta: ")) != nullptr)
+    {
+        if (*input)
+            add_history(input);
 
         std::string query(input);
 
-        start = std::chrono::system_clock::now();
-        auto queryResult = prodList.query(query);
-        end = std::chrono::system_clock::now();
+        if (query == "/sair")
+            break;
 
-        duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count();
-        int i=1;
-        for(auto const& r: queryResult){
+        // process query and calculate time spent
+        auto start = std::chrono::system_clock::now();
+        auto queryResult = prodList.query(query);
+        auto end = std::chrono::system_clock::now();
+
+        auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count();
+        int i = 1;
+
+        // display results
+        for (auto const &r : queryResult)
+        {
             std::cout << "#" << i << " - \"" << r.prod->id << "\" - \"" << r.prod->name << "\"" << std::endl;
             i++;
         }
-        std::cout << "Query done in: " << duration << "ms\n" << std::endl;
-        free((void *) input);
+
+        std::cout << "Consulta concluída em: " << duration << "ms\n"
+                  << std::endl;
+
+        free((void *)input);
     }
+
     return 0;
 }
-
