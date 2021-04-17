@@ -15,18 +15,18 @@ public:
     ~InvertedIndex() = default;
 
     /**
-     * @brief add a word occurence mapped to a product index.
+     * @brief Add a word occurrence mapped to a product index.
      *
-     * @param str word to be mapped.
-     * @param productIdx product index.
+     * @param str Word to be mapped.
+     * @param productIdx Product index.
      */
     void add(const std::string &str, const int productIdx);
 
     /**
-     * @brief get a pointer to the vector of product indexes where the given word occurs.
-     * If there is no matching word a nullptr is return.
+     * @brief Get a pointer to the vector of product indexes where the given word occurs.
+     * If there is no matching word a nullptr is returned.
      *
-     * @param str word to be search
+     * @param str Word to be searched.
      * @return std::vector<int>* vector of int containing product indexes or nullptr.
      */
     std::vector<int> *get(const std::string &str);

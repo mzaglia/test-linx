@@ -41,8 +41,8 @@ std::vector<QueryResult> ProductList::query(const std::string &str)
     {
         auto prodTokens = tokenize(p->name);
 
-        // perform sorensenDice to compare query and product name.
-        // add weight to score accordingly to the number of common tokens beetween query and product name.
+        // perform Sørensen–Dice to compare query and product name.
+        // add weight to score according to the number of common tokens between query and product name.
         auto score = sorensenDice(str, p->name) * numCommonTokens(tokens, prodTokens);
 
         results.push_back(QueryResult(p, score));

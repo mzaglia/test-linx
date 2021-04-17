@@ -27,7 +27,7 @@ std::vector<std::string> static tokenize(const std::string &str)
 };
 
 /**
- * @brief Count the number of common tokens beetween two strings.
+ * @brief Count the number of common tokens between two strings.
  *
  * @param tokens1 First string.
  * @param tokens2 Second string.

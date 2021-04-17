@@ -6,7 +6,8 @@
 
 
 /**
- * @brief Similarity based in Sørensen–Dice index.
+ * @brief Compare two strings and returns a score of similarity based in Sørensen–Dice index.
+ * Based on https://stackoverflow.com/a/38314232
  *
  * @param _str1 First string.
  * @param _str2 Second string.
