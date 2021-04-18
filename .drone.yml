@@ -22,7 +22,7 @@ steps:
   settings:
     auto-tag: true
     password:
-      from_password: dockerhub_pass
+      from_secret: dockerhub_pass
     repo: ${DRONE_REPO}
     username:
       from_secret: dockerhub_user
