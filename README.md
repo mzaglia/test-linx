@@ -1,6 +1,9 @@
 # test-linx
 
 [![Build Status](https://cloud.drone.io/api/badges/mzaglia/test-linx/status.svg)](https://cloud.drone.io/mzaglia/test-linx)
+![Docker Build Status](https://img.shields.io/docker/build/mzaglia/test-linx)
+![Docker Image Version (latest by date)](https://img.shields.io/docker/v/mzaglia/test-linx)
+
 
 Este repositório contém o desafio da Linx para a vaga de Engenheiro de Backend.
 
