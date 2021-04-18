@@ -1,0 +1,13 @@
+kind: pipeline
+type: docker
+name: default
+
+steps:
+- name: build
+  image: gcc
+  commands:
+  - apt-get update
+  - apt-get install -y cmake git libreadline-dev libboost-dev
+  - git submodule update --init
+  - cmake -DCMAKE_BUILD_TYPE=Release -B build
+  - make -C build
