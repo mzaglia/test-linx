@@ -1,7 +1,6 @@
 # test-linx
 
 [![Build Status](https://cloud.drone.io/api/badges/mzaglia/test-linx/status.svg)](https://cloud.drone.io/mzaglia/test-linx)
-![Docker Build Status](https://img.shields.io/docker/build/mzaglia/test-linx)
 ![Docker Image Version (latest by date)](https://img.shields.io/docker/v/mzaglia/test-linx)
 
 
@@ -91,7 +90,11 @@ Consulta concluída em: 3ms
 ## Executando através do Docker
 Caso queira é possível utilizar o programa através do docker.
 
-Faça o build da imagem
+```
+docker run -it mzaglia/test-linx:latest
+```
+
+Ou faça o build da imagem
 ```
 docker build -t test-linx .
 ```
